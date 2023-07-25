@@ -4,16 +4,72 @@
 /*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
 CREATE DATABASE IF NOT EXISTS `cinema` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
 USE `cinema`;
 
-CREATE TABLE IF NOT EXISTS 'REALISATEUR'(
-   'id_realisateur' INT (11) NOT NULL,
-   'id_personne' INT (11) NOT NULL,
-   PRIMARY KEY('id_realisateur'),AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS 'GENRE'(
+   'id_genre' INT AUTO_INCREMENT,
+   'genre' VARCHAR(50) NOT NULL,
+   PRIMARY KEY('id_genre'),
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*!40000 ALTER TABLE `GENRE` DISABLE KEYS */
+INSERT INTO `REALISATEUR` (`id_genre`, `genre`) VALUES
+(1, 'action');
+(2,'fiction');
+(3,'adventure');
+(4, 'comedie');
+/*!40000 ALTER TABLE `GENRE` DISABLE KEYS */
+
+CREATE TABLE IF NOT EXISTS 'ROLE'(
+   'id_role' INT  AUTO_INCREMENT,
+   'role' VARCHAR(50) NOT NULL,
+   PRIMARY KEY('id_role'),
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*!40000 ALTER TABLE `ROLE` DISABLE KEYS */
+INSERT INTO `REALISATEUR` (`id_realisateur`, `role`) VALUES
+(1,'Batman');
+/*!40000 ALTER TABLE `ROLE` DISABLE KEYS */
+
+CREATE TABLE IF NOT EXISTS 'PERSONNE'(
+   'id_personne' INT AUTO_INCREMENT,
+   'nom' VARCHAR(50) NOT NULL,
+   'prenom' VARCHAR(50) NOT NULL,
+   'sexe' VARCHAR(10) NOT NULL,
+   'dateNaissance' DATE NOT NULL,
+   PRIMARY KEY('id_personne'),
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*!40000 ALTER TABLE `PERSONNE` DISABLE KEYS */
+
+
+/*!40000 ALTER TABLE `PERSONNE` DISABLE KEYS */
+
+CREATE TABLE IF NOT EXISTS 'ACTEUR'(
+   'id_acteur' INT AUTO_INCREMENT,
+   'id_personne' INT NOT NULL,
+   PRIMARY KEY('id_acteur'),
    UNIQUE('id_personne'),
    FOREIGN KEY('id_personne') REFERENCES 'PERSONNE'('id_personne')
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+/*!40000 ALTER TABLE `ACTEUR` DISABLE KEYS */
+INSERT INTO `REALISATEUR` (`id_acteur`, `id_personne`) VALUES
+(1,6);
+(2,7);
+(3,8);
+(4,9);
+/*!40000 ALTER TABLE `ACTEUR` DISABLE KEYS */
+
+
+CREATE TABLE IF NOT EXISTS 'REALISATEUR'(
+   'id_realisateur' INT AUTO_INCREMENT,
+   'id_personne' INT,   
+   PRIMARY KEY('id_realisateur'),
+   UNIQUE('id_personne'),
+   FOREIGN KEY('id_personne') REFERENCES 'PERSONNE'('id_personne'),
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*!40000 ALTER TABLE `REALISATEUR` DISABLE KEYS */
@@ -27,7 +83,7 @@ INSERT INTO `REALISATEUR` (`id_realisateur`, `id_personne`) VALUES
 
 
 CREATE TABLE IF NOT EXISTS 'FILM'(
-   'id_film' INT,
+   'id_film' INT AUTO_INCREMENT,
    'titre' VARCHAR(50) NOT NULL,
    'anneeSortie' INT NOT NULL,
    'duree' INT NOT NULL,
@@ -35,7 +91,7 @@ CREATE TABLE IF NOT EXISTS 'FILM'(
    'note' INT NOT NULL,
    'affiche' VARCHAR(255) NOT NULL,
    'id_realisateur' INT NOT NULL,
-   PRIMARY KEY('id_film'),AUTO_INCREMENT,
+   PRIMARY KEY('id_film'),
    FOREIGN KEY('id_realisateur') REFERENCES 'REALISATEUR'('id_realisateur')
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -48,10 +104,10 @@ INSERT INTO `REALISATEUR` (`id_film`, `id_titre`, 'anneeSortie','duree', 'synops
 /*!40000 ALTER TABLE `FILM` DISABLE KEYS */
 
 CREATE TABLE IF NOT EXISTS 'JOUER'(
-   'id_film' INT,
-   'id_acteur' INT,
-   'id_role' VARCHAR(50),
-   PRIMARY KEY('id_film, id_acteur, id_role'),AUTO_INCREMENT,
+   'id_film' INT ,
+   'id_acteur' INT ,
+   'id_role' INT ,
+   PRIMARY KEY('id_film, id_acteur, id_role'),
    FOREIGN KEY('id_film') REFERENCES 'FILM'('id_film'),
    FOREIGN KEY('id_acteur') REFERENCES 'ACTEUR'('id_acteur'),
    FOREIGN KEY('id_role') REFERENCES ROLE('id_role'),
@@ -67,73 +123,24 @@ INSERT INTO `REALISATEUR` (`id_film`, `id_acteur`, 'id_role') VALUES
 
 
 CREATE TABLE IF NOT EXISTS 'ACTION'(
-   'id_film' INT,
-   'id_genre' INT,
-   PRIMARY KEY('id_film, id_genre'),AUTO_INCREMENT,
+   'id_film' INT ,
+   'id_genre' INT ,
+   PRIMARY KEY('id_film, id_genre'),
    FOREIGN KEY('id_film') REFERENCES 'FILM'('id_film'),
    FOREIGN KEY('id_genre') REFERENCES 'GENRE'('id_genre')
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*!40000 ALTER TABLE `ACTION` DISABLE KEYS */
+INSERT INTO `REALISATEUR` (`id_film`, `id_genre`) VALUES
 (1, 1);
 (2, 2);
 (3, 3);
 (4, 4);
 /*!40000 ALTER TABLE `ACTION` DISABLE KEYS */
 
-CREATE TABLE IF NOT EXISTS 'GENRE'(
-   'id_genre' INT,
-   'genre' VARCHAR(50) NOT NULL,
-   PRIMARY KEY('id_genre'),AUTO_INCREMENT,
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-/*!40000 ALTER TABLE `GENRE` DISABLE KEYS */
-(1, 'action');
-(2,'fiction');
-(3,'adventure');
-(4, 'comedie');
-/*!40000 ALTER TABLE `GENRE` DISABLE KEYS */
-
-CREATE TABLE IF NOT EXISTS 'ROLE'(
-   'id_role' VARCHAR(50),
-   role VARCHAR(50) NOT NULL,
-   PRIMARY KEY('id_role'),AUTO_INCREMENT,
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-/*!40000 ALTER TABLE `ROLE` DISABLE KEYS */
-(1);
-/*!40000 ALTER TABLE `ROLE` DISABLE KEYS */
-
-CREATE TABLE IF NOT EXISTS 'PERSONNE'(
-   'id_personne' INT,
-   'nom' VARCHAR(50) NOT NULL,
-   'prenom' VARCHAR(50) NOT NULL,
-   'sexe' LOGICAL NOT NULL,
-   'dateNaissance' DATE NOT NULL,
-   PRIMARY KEY('id_personne'),AUTO_INCREMENT,
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-/*!40000 ALTER TABLE `PERSONNE` DISABLE KEYS */
 
 
-/*!40000 ALTER TABLE `PERSONNE` DISABLE KEYS */
 
-CREATE TABLE IF NOT EXISTS 'ACTEUR'(
-   'id_acteur' INT,
-   'id_personne' INT NOT NULL,
-   PRIMARY KEY('id_acteur'),AUTO_INCREMENT,
-   UNIQUE('id_personne'),
-   FOREIGN KEY('id_personne') REFERENCES 'PERSONNE'('id_personne')
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-/*!40000 ALTER TABLE `ACTEUR` DISABLE KEYS */
-(1,6);
-(2,7);
-(3,8);
-(4,9);
-
-/*!40000 ALTER TABLE `ACTEUR` DISABLE KEYS */
 
 
 
