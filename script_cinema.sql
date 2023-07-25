@@ -8,18 +8,6 @@
 CREATE DATABASE IF NOT EXISTS `cinema` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
 USE `cinema`;
 
-CREATE TABLE IF NOT EXISTS `autoriser_boire` (
-  `id_potion` int(11) NOT NULL,
-  `id_personnage` int(11) NOT NULL,
-  PRIMARY KEY (`id_potion`,`id_personnage`) 
-  KEY `FK_AUTO_PERSO` (`id_personnage`),
-  CONSTRAINT `FK_AUTO_PERSO` FOREIGN KEY (`id_personnage`) REFERENCES `personnage` (`id_personnage`),
-  CONSTRAINT `FK_AUTO_POTION` FOREIGN KEY (`id_potion`) REFERENCES `potion` (`id_potion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-
-
 CREATE TABLE IF NOT EXISTS 'REALISATEUR'(
    'id_realisateur' INT (11) NOT NULL,
    'id_personne' INT (11) NOT NULL,
