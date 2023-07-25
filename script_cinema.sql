@@ -1,147 +1,76 @@
+-- --------------------------------------------------------
+-- Hôte:                         127.0.0.1
+-- Version du serveur:           8.0.30 - MySQL Community Server - GPL
+-- SE du serveur:                Win64
+-- HeidiSQL Version:             12.1.0.6537
+-- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-CREATE DATABASE IF NOT EXISTS `cinema` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
-USE `cinema`;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE TABLE IF NOT EXISTS 'GENRE'(
-   'id_genre' INT AUTO_INCREMENT,
-   'genre' VARCHAR(50) NOT NULL,
-   PRIMARY KEY('id_genre'),
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- Listage des données de la table cinema.acteur : ~4 rows (environ)
+INSERT INTO `acteur` (`id_acteur`, `id_personne`) VALUES
+	(1, 4),
+	(2, 5),
+	(3, 6),
+	(4, 7);
 
-/*!40000 ALTER TABLE `GENRE` DISABLE KEYS */
-INSERT INTO `REALISATEUR` (`id_genre`, `genre`) VALUES
-(1, 'action');
-(2,'fiction');
-(3,'adventure');
-(4, 'comedie');
-/*!40000 ALTER TABLE `GENRE` DISABLE KEYS */
+-- Listage des données de la table cinema.action : ~4 rows (environ)
+INSERT INTO `action` (`id_film`, `id_genre`) VALUES
+	(1, 1),
+	(2, 2),
+	(3, 3),
+	(4, 4);
 
-CREATE TABLE IF NOT EXISTS 'ROLE'(
-   'id_role' INT  AUTO_INCREMENT,
-   'role' VARCHAR(50) NOT NULL,
-   PRIMARY KEY('id_role'),
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- Listage des données de la table cinema.film : ~4 rows (environ)
+INSERT INTO `film` (`id_film`, `titre`, `anneeSortie`, `duree`, `synopsis`, `note`, `affiche`, `id_realisateur`) VALUES
+	(1, 'batman le defi', 1992, 126, 'Non seulement Batman doit affronter le Pingouin, monstre génétique doté d\'une intelligence à toute épreuve, qui sème la terreur mais, plus difficile encore, il doit faire face à la séduction de deux super-femmes', 4, 'batman_defi.jpg', 1),
+	(2, 'batman_forever', 1995, 135, 'Nul ne sait que Bruce Wayne, le patron d\'un vaste et puissant consortium, l\'homme le plus riche des Etats-Unis, revêt chaque nuit la combinaison et le masque de cuir de Batman pour voler au secours de ses ', 5, 'batman_forever.jpg', 2),
+	(3, 'batman et robin', 1997, 140, 'Dans cette nouvelle aventure, Batman aura bien besoin de son audacieux partenaire Robin, juché sur sa fringante moto turbo.', 3, 'robin.jpg', 2),
+	(4, 'batman begins', 2005, 145, 'Non seulement Batman doit affronter le Pingouin, monstre génétique doté d\'une intelligence à toute épreuve', 5, 'begins.jpg', 3);
 
-/*!40000 ALTER TABLE `ROLE` DISABLE KEYS */
-INSERT INTO `REALISATEUR` (`id_realisateur`, `role`) VALUES
-(1,'Batman');
-/*!40000 ALTER TABLE `ROLE` DISABLE KEYS */
+-- Listage des données de la table cinema.genre : ~4 rows (environ)
+INSERT INTO `genre` (`id_genre`, `genre`) VALUES
+	(1, 'action'),
+	(2, 'fiction'),
+	(3, 'adventure'),
+	(4, 'comedie');
 
-CREATE TABLE IF NOT EXISTS 'PERSONNE'(
-   'id_personne' INT AUTO_INCREMENT,
-   'nom' VARCHAR(50) NOT NULL,
-   'prenom' VARCHAR(50) NOT NULL,
-   'sexe' VARCHAR(10) NOT NULL,
-   'dateNaissance' DATE NOT NULL,
-   PRIMARY KEY('id_personne'),
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- Listage des données de la table cinema.jouer : ~4 rows (environ)
+INSERT INTO `jouer` (`id_film`, `id_acteur`, `id_role`) VALUES
+	(1, 1, 1),
+	(2, 2, 1),
+	(3, 3, 1),
+	(4, 4, 1);
 
-/*!40000 ALTER TABLE `PERSONNE` DISABLE KEYS */
+-- Listage des données de la table cinema.personne : ~7 rows (environ)
+INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `sexe`, `dateNaissance`) VALUES
+	(1, 'Tim', 'Burton', 'male', '1958-08-25'),
+	(2, 'Joel', 'Schumacher', 'male', '1939-08-29'),
+	(3, 'Cristopher', 'Nolan', 'male', '1970-07-30'),
+	(4, 'Michael', 'Keaton ', 'male', '1951-09-05'),
+	(5, 'Val', 'Kilmer', 'male', '1959-12-31'),
+	(6, 'George', 'Clooney', 'male', '1961-05-06'),
+	(7, 'christian', 'Bale', 'male', '1974-01-30');
 
+-- Listage des données de la table cinema.realisateur : ~3 rows (environ)
+INSERT INTO `realisateur` (`id_realisateur`, `id_personne`) VALUES
+	(1, 1),
+	(2, 2),
+	(3, 3);
 
-/*!40000 ALTER TABLE `PERSONNE` DISABLE KEYS */
+-- Listage des données de la table cinema.role : ~1 rows (environ)
+INSERT INTO `role` (`id_role`, `ROLE`) VALUES
+	(1, 'Batman');
 
-CREATE TABLE IF NOT EXISTS 'ACTEUR'(
-   'id_acteur' INT AUTO_INCREMENT,
-   'id_personne' INT NOT NULL,
-   PRIMARY KEY('id_acteur'),
-   UNIQUE('id_personne'),
-   FOREIGN KEY('id_personne') REFERENCES 'PERSONNE'('id_personne')
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-
-/*!40000 ALTER TABLE `ACTEUR` DISABLE KEYS */
-INSERT INTO `REALISATEUR` (`id_acteur`, `id_personne`) VALUES
-(1,6);
-(2,7);
-(3,8);
-(4,9);
-/*!40000 ALTER TABLE `ACTEUR` DISABLE KEYS */
-
-
-CREATE TABLE IF NOT EXISTS 'REALISATEUR'(
-   'id_realisateur' INT AUTO_INCREMENT,
-   'id_personne' INT,   
-   PRIMARY KEY('id_realisateur'),
-   UNIQUE('id_personne'),
-   FOREIGN KEY('id_personne') REFERENCES 'PERSONNE'('id_personne'),
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-/*!40000 ALTER TABLE `REALISATEUR` DISABLE KEYS */
-INSERT INTO `REALISATEUR` (`id_realisateur`, `id_personne`) VALUES
-(1, 1);
-(2, 2);
-(3, 3);
-(4, 4);
-(5, 5);
-/*!40000 ALTER TABLE `REALISATEUR` DISABLE KEYS */
-
-
-CREATE TABLE IF NOT EXISTS 'FILM'(
-   'id_film' INT AUTO_INCREMENT,
-   'titre' VARCHAR(50) NOT NULL,
-   'anneeSortie' INT NOT NULL,
-   'duree' INT NOT NULL,
-   'synopsis' VARCHAR(255) NOT NULL,
-   'note' INT NOT NULL,
-   'affiche' VARCHAR(255) NOT NULL,
-   'id_realisateur' INT NOT NULL,
-   PRIMARY KEY('id_film'),
-   FOREIGN KEY('id_realisateur') REFERENCES 'REALISATEUR'('id_realisateur')
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-/*!40000 ALTER TABLE `FILM` DISABLE KEYS */
-INSERT INTO `REALISATEUR` (`id_film`, `id_titre`, 'anneeSortie','duree', 'synopsis','note','affiche','id_realisateur') VALUES
-(1, 11, 1992, 126, "Non seulement Batman doit affronter le Pingouin, monstre génétique doté d'une intelligence à toute épreuve, qui sème la terreur mais, plus difficile encore, il doit faire face à la séduction de deux super-femmes", 4,'batman_defi.jpg',1  );
-(2, 22, 1995, 135, "Nul ne sait que Bruce Wayne, le patron d'un vaste et puissant consortium, l'homme le plus riche des Etats-Unis, revêt chaque nuit la combinaison et le masque de cuir de Batman pour voler au secours de ses concitoyens injustement opprimés. Personne, hormis son fidèle maître d'hôtel Alfred et son vieil ami, le commissaire Gordon", 5,'batman_forever.jpg',2  );
-(3, 33, 1997, 140, "Dans cette nouvelle aventure, Batman aura bien besoin de son audacieux partenaire Robin, juché sur sa fringante moto turbo. En effet, le glacial M. Freeze fait régner une vague de froid polaire sur Gotham City avec la complicité de la belle et vénéneuse Poison Ivy", 3,'robin.jpg',2  );
-(4, 45, 2005, 145, "Non seulement Batman doit affronter le Pingouin, monstre génétique doté d'une intelligence à toute épreuve, qui sème la terreur mais, plus difficile encore, il doit faire face à la séduction de deux super-femmes", 5,'begins.jpg',3  );
-/*!40000 ALTER TABLE `FILM` DISABLE KEYS */
-
-CREATE TABLE IF NOT EXISTS 'JOUER'(
-   'id_film' INT ,
-   'id_acteur' INT ,
-   'id_role' INT ,
-   PRIMARY KEY('id_film, id_acteur, id_role'),
-   FOREIGN KEY('id_film') REFERENCES 'FILM'('id_film'),
-   FOREIGN KEY('id_acteur') REFERENCES 'ACTEUR'('id_acteur'),
-   FOREIGN KEY('id_role') REFERENCES ROLE('id_role'),
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-/*!40000 ALTER TABLE `JOUER` DISABLE KEYS */
-INSERT INTO `REALISATEUR` (`id_film`, `id_acteur`, 'id_role') VALUES
-(1, 1, 1);
-(2, 2, 1);
-(3, 3, 1);
-(4, 4, 1);
-/*!40000 ALTER TABLE `JOUER` DISABLE KEYS */
-
-
-CREATE TABLE IF NOT EXISTS 'ACTION'(
-   'id_film' INT ,
-   'id_genre' INT ,
-   PRIMARY KEY('id_film, id_genre'),
-   FOREIGN KEY('id_film') REFERENCES 'FILM'('id_film'),
-   FOREIGN KEY('id_genre') REFERENCES 'GENRE'('id_genre')
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-/*!40000 ALTER TABLE `ACTION` DISABLE KEYS */
-INSERT INTO `REALISATEUR` (`id_film`, `id_genre`) VALUES
-(1, 1);
-(2, 2);
-(3, 3);
-(4, 4);
-/*!40000 ALTER TABLE `ACTION` DISABLE KEYS */
-
-
-
-
-
-
-
-
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */ ;
