@@ -36,12 +36,8 @@ ORDER BY nombre DESC
 /*-----F-----Casting d’un film en particulier (id_film) : nom, prénom des acteurs + sexe*/
 SELECT nom, prenom, sexe 
 FROM personne 
-
-
 INNER JOIN acteur  ON personne.id_personne = acteur.id_personne
-
 INNER JOIN jouer  ON acteur.id_acteur = jouer.id_acteur
-
 WHERE id_film = 2
 
 /*-----G-----Films tournés par un acteur en particulier (id_acteur) avec leur rôle et l’année de
@@ -61,7 +57,7 @@ WHERE a.id_acteur = 3
 SELECT titre, anneeSortie
 FROM film f
 WHERE anneeSortie > NOW()-5
-ORDER BY anneSortie DESC 
+ORDER BY anneeSortie DESC 
 
 /*-----J-----Nombre d’hommes et de femmes parmi les acteurs*/
 SELECT sexe, COUNT(sexe) AS nombre
@@ -69,6 +65,12 @@ FROM personne
 ORDER BY sexe
 
 /*-----K-----Liste des acteurs ayant plus de 50 ans (âge révolu et non révolu)*/
+SELECT nom, dateNaissance
+FROM personne p
+WHERE (DATE_FORMAT(NOW(), "%Y")- DATE_FORMAT(dateNaissance, "%Y")) >50
+
+/*-----L-----Acteurs ayant joué dans 3 films ou plus*/
+
 
 
 
