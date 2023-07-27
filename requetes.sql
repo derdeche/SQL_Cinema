@@ -70,6 +70,12 @@ FROM personne p
 WHERE (DATE_FORMAT(NOW(), "%Y")- DATE_FORMAT(dateNaissance, "%Y")) >50
 
 /*-----L-----Acteurs ayant joué dans 3 films ou plus*/
+SELECT nom, prenom, COUNT(j.id_film) AS nombreFilm
+FROM personne p
+INNER JOIN acteur a ON a.id_personne = p.id_personne
+INNER JOIN jouer j ON j.id_acteur = a.id_acteur
+GROUP BY p.id_personne
+HAVING COUNT(j.id_film) > 3;
 
 
 
